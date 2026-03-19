@@ -1,0 +1,267 @@
+/* =============================================
+   Vodia PBX Admin Sidebar — Styles
+   Version: 1.0.0
+   ============================================= */
+
+/* === Sidebar container === */
+.vodia-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  z-index: 99999;
+  display: flex;
+  align-items: flex-start;
+  pointer-events: none;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  transition: transform 0.25s ease;
+}
+
+.vodia-sidebar.collapsed .vodia-sidebar-container {
+  display: none;
+}
+
+.vodia-sidebar > * {
+  pointer-events: auto;
+}
+
+/* === Toggle tab === */
+.vodia-sidebar-toggle {
+  position: relative;
+  top: 80px;
+  width: 28px;
+  height: 80px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+  color: #94a3b8;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: background 0.2s, color 0.2s;
+  padding: 0;
+}
+
+.vodia-sidebar-toggle:hover {
+  background: #334155;
+  color: #e2e8f0;
+}
+
+.vodia-sidebar-toggle-icon {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* === Main container === */
+.vodia-sidebar-container {
+  width: 280px;
+  height: 100vh;
+  background: #0f172a;
+  border-left: 1px solid #1e293b;
+  overflow-y: auto;
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.3);
+}
+
+/* === Header === */
+.vodia-sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #1e293b;
+  background: #1e293b;
+}
+
+.vodia-sidebar-title {
+  font-weight: 600;
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.vodia-sidebar-domain {
+  font-size: 11px;
+  color: #38bdf8;
+  font-family: monospace;
+  background: #0f172a;
+  padding: 2px 6px;
+  border-radius: 3px;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vodia-sidebar-refresh {
+  margin-left: auto;
+  background: none;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 16px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.vodia-sidebar-refresh:hover {
+  color: #38bdf8;
+  border-color: #38bdf8;
+}
+
+/* === Sections === */
+.vodia-sidebar-section {
+  border-bottom: 1px solid #1e293b;
+}
+
+.vodia-sidebar-section-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 14px;
+  background: #1e293b;
+  border: none;
+  color: #e2e8f0;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.vodia-sidebar-section-toggle:hover {
+  background: #334155;
+}
+
+.vodia-sidebar-arrow {
+  font-size: 10px;
+  color: #64748b;
+}
+
+.vodia-sidebar-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: normal;
+}
+
+.vodia-sidebar-section-content {
+  padding: 4px 0;
+}
+
+/* === Account tables === */
+.vodia-sidebar-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.vodia-sidebar-table tr:hover {
+  background: #1e293b;
+}
+
+.vodia-sidebar-table td {
+  padding: 3px 14px;
+  border: none;
+}
+
+/* === Account type headers === */
+.vodia-sidebar-type-header {
+  background: #1e293b;
+  color: #38bdf8;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 6px 14px;
+  border-top: 1px solid #334155;
+  position: sticky;
+  top: 0;
+}
+
+/* === Account rows === */
+.vodia-acc-num {
+  color: #38bdf8;
+  font-weight: 600;
+  font-family: monospace;
+  font-size: 12px;
+  width: 60px;
+}
+
+.vodia-acc-name {
+  color: #cbd5e1;
+  font-size: 12px;
+}
+
+/* === States === */
+.vodia-sidebar-loading {
+  color: #64748b;
+  font-size: 12px;
+  padding: 12px 14px;
+}
+
+.vodia-sidebar-placeholder {
+  color: #475569;
+  font-size: 12px;
+  padding: 12px 14px;
+  font-style: italic;
+}
+
+.vodia-sidebar-error {
+  color: #f87171;
+  font-size: 12px;
+  padding: 12px 14px;
+}
+
+/* === Service Flag state indicators === */
+.vodia-state-on {
+  display: inline-block;
+  background: #22c55e;
+  color: #0f172a;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+}
+
+.vodia-state-off {
+  display: inline-block;
+  background: #475569;
+  color: #94a3b8;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 5px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  vertical-align: middle;
+}
+
+/* === Scrollbar === */
+.vodia-sidebar-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.vodia-sidebar-container::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+.vodia-sidebar-container::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+.vodia-sidebar-container::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 780px;
+      height: 560px;
+      background: #0f172a;
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-size: 13px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* === Header === */
+    .header {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border-bottom: 1px solid #1e293b;
+      background: #1e293b; flex-shrink: 0;
+    }
+    .header-logo {
+      width: 24px; height: 24px; border-radius: 4px;
+    }
+    .header h2 { font-size: 14px; font-weight: 600; color: #38bdf8; flex: 1; }
+    .header-version { font-size: 10px; color: #475569; }
+
+    /* === Tab bar === */
+    .tab-bar {
+      display: flex; align-items: center; gap: 0;
+      background: #0f172a; border-bottom: 1px solid #1e293b;
+      flex-shrink: 0; padding: 0 12px; overflow-x: auto;
+    }
+    .tab-bar::-webkit-scrollbar { height: 0; }
+    .tab-item {
+      padding: 7px 14px; font-size: 11px; font-weight: 500;
+      color: #64748b; cursor: pointer; border-bottom: 2px solid transparent;
+      white-space: nowrap; user-select: none; transition: color 0.15s, border-color 0.15s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tab-item:hover { color: #94a3b8; }
+    .tab-item.active { color: #38bdf8; border-bottom-color: #38bdf8; }
+    .tab-item .tab-close {
+      font-size: 12px; color: #475569; line-height: 1; padding: 0 2px;
+      cursor: pointer; display: none;
+    }
+    .tab-item:hover .tab-close { display: inline; }
+    .tab-item .tab-close:hover { color: #f87171; }
+    .tab-add {
+      padding: 7px 10px; font-size: 14px; color: #475569;
+      cursor: pointer; border: none; background: none; line-height: 1;
+    }
+    .tab-add:hover { color: #38bdf8; }
+
+    /* === Toolbar === */
+    .toolbar {
+      display: flex; align-items: center; gap: 6px; padding: 8px 16px;
+      border-bottom: 1px solid #1e293b; background: #0f172a; flex-shrink: 0;
+    }
+
+    /* === Grid container === */
+    .grid-container {
+      flex: 1; overflow-y: auto; padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      align-content: start;
+    }
+
+    /* === Section card (post-it) === */
+    .section-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      display: flex;
+      flex-direction: column;
+      min-height: 120px;
+      max-height: 400px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .section-card:hover { border-color: #475569; }
+    .section-card.drag-over {
+      border-color: #38bdf8;
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25);
+    }
+    .section-card.dragging {
+      opacity: 0.5;
+      border-style: dashed;
+    }
+
+    .section-card-header {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 10px;
+      background: #334155;
+      border-radius: 5px 5px 0 0;
+      cursor: grab;
+      user-select: none;
+    }
+    .section-card-header:active { cursor: grabbing; }
+    .section-card-title {
+      flex: 1; font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.04em; color: #e2e8f0;
+    }
+    .section-card-type {
+      font-size: 9px; color: #64748b; background: #0f172a;
+      padding: 1px 6px; border-radius: 3px;
+    }
+    .btn-del-section {
+      background: none; border: none; color: #475569; cursor: pointer;
+      font-size: 14px; padding: 0 2px; line-height: 1;
+    }
+    .btn-del-section:hover { color: #f87171; }
+
+    .section-card-body {
+      flex: 1; overflow-y: auto; padding: 8px 10px;
+    }
+
+    /* === Table sections === */
+    .section-card table { width: 100%; border-collapse: collapse; }
+    .section-card th {
+      text-align: left; font-size: 10px; color: #64748b;
+      text-transform: uppercase; padding: 2px 4px;
+      border-bottom: 1px solid #334155;
+    }
+    .section-card td { padding: 2px 4px; }
+    .section-card input[type="text"] {
+      background: #0f172a; border: 1px solid #334155; color: #e2e8f0;
+      padding: 3px 6px; border-radius: 3px; font-size: 11px; width: 100%;
+    }
+    .section-card input[type="text"]:focus { outline: none; border-color: #38bdf8; }
+    .range-input { font-family: monospace; color: #38bdf8; font-weight: 600; }
+    .btn-del-row { background: none; border: none; color: #475569; cursor: pointer; font-size: 12px; padding: 0 2px; }
+    .btn-del-row:hover { color: #f87171; }
+    .btn-add-row {
+      background: none; border: 1px dashed #334155; color: #64748b;
+      width: 100%; padding: 3px; cursor: pointer; font-size: 10px;
+      margin-top: 4px; border-radius: 3px;
+    }
+    .btn-add-row:hover { border-color: #38bdf8; color: #38bdf8; }
+
+    /* === Notes sections === */
+    .section-card textarea {
+      width: 100%; height: 100%; min-height: 80px;
+      background: #0f172a; border: 1px solid #334155;
+      color: #e2e8f0; padding: 6px 8px; border-radius: 3px;
+      font-family: monospace; font-size: 11px;
+      resize: none; line-height: 1.5;
+    }
+    .section-card textarea:focus { outline: none; border-color: #38bdf8; }
+
+    /* === Buttons === */
+    button {
+      padding: 5px 12px; border: none; border-radius: 4px;
+      cursor: pointer; font-size: 11px; font-weight: 500;
+    }
+    .btn-save { background: #38bdf8; color: #0f172a; }
+    .btn-save:hover { background: #0ea5e9; }
+    .btn-save:disabled { background: #475569; color: #94a3b8; cursor: default; }
+    .btn-secondary { background: #334155; color: #94a3b8; }
+    .btn-secondary:hover { background: #475569; }
+    .btn-add-section {
+      background: none; border: 1px dashed #334155; color: #64748b;
+      padding: 6px 14px; cursor: pointer; font-size: 11px;
+    }
+    .btn-add-section:hover { border-color: #38bdf8; color: #38bdf8; }
+
+    /* === Shared input style === */
+    input[type="text"] {
+      background: #1e293b; border: 1px solid #334155; color: #e2e8f0;
+      padding: 5px 8px; border-radius: 3px; font-size: 12px; width: 100%;
+    }
+    input[type="text"]:focus { outline: none; border-color: #38bdf8; }
+
+    /* === Status bar === */
+    .status-bar {
+      padding: 5px 16px; font-size: 11px; color: #22c55e;
+      background: #0f172a; border-top: 1px solid #1e293b;
+      flex-shrink: 0; display: none;
+    }
+
+    /* === Hidden file input === */
+    .hidden { display: none; }
+
+    /* === Scrollbar === */
+    .grid-container::-webkit-scrollbar { width: 6px; }
+    .grid-container::-webkit-scrollbar-track { background: #0f172a; }
+    .grid-container::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+    .section-card-body::-webkit-scrollbar { width: 4px; }
+    .section-card-body::-webkit-scrollbar-track { background: transparent; }
+    .section-card-body::-webkit-scrollbar-thumb { background: #334155; border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+  <div id="main-app" style="flex:1; display:flex; flex-direction:column;">
+    <div class="header">
+      <img src="icons/icon48.png" class="header-logo">
+      <h2>Vodia PBX Admin Sidebar</h2>
+      <span class="header-version">v1.0.0</span>
+    </div>
+
+    <div class="tab-bar" id="tab-bar"></div>
+
+    <div class="toolbar">
+      <button class="btn-save" id="btn-save" disabled>&#128190; Save</button>
+      <button class="btn-add-section" id="btn-add-section">+ Section</button>
+      <div style="flex:1"></div>
+      <button class="btn-secondary" id="btn-export" title="Export notes as JSON">&#8681; Export</button>
+      <button class="btn-secondary" id="btn-import" title="Import notes from JSON">&#8679; Import</button>
+      <button class="btn-secondary" id="btn-reset" title="Reset to default convention">&#8634; Reset</button>
+      <input type="file" id="file-import" class="hidden" accept=".json">
+    </div>
+
+    <div class="grid-container" id="grid-container"></div>
+
+    <div class="status-bar" id="status-bar"></div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

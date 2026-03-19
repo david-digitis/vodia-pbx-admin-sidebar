@@ -1,0 +1,29 @@
+{
+  "version": "2.0",
+  "tabs": [
+    {
+      "id": "vodia",
+      "title": "Vodia",
+      "sections": [
+        {
+          "id": "numbering",
+          "title": "Numbering Convention",
+          "type": "table",
+          "columns": ["label", "range"],
+          "rows": [
+            { "label": "Extensions",        "range": "200-400" },
+            { "label": "Service Flags",      "range": "500-599" },
+            { "label": "Ring Groups",        "range": "600-699" },
+            { "label": "Call Queues",        "range": "700-799" },
+            { "label": "IVR Nodes",          "range": "800-899" },
+            { "label": "Auto Attendants",    "range": "2000-2100" },
+            { "label": "Conference Rooms",   "range": "2100-2200" },
+            { "label": "Park Orbits",        "range": "2300-2400" },
+            { "label": "Calling Cards",      "range": "2500-2600" },
+            { "label": "Paging Groups",      "range": "2700-2800" }
+          ]
+        }
+      ]
+    }
+  ]
+}
